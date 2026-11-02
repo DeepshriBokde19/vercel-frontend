@@ -9,16 +9,28 @@ const crypto = require("crypto");
 dotenv.config();
 
 const app = express();
-
+app.set("trust proxy", 1);
 // ================= MIDDLEWARE =================
 
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URL || "http://localhost:5173",
+//   })
+// );
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: [
+      "https://alpha-engineering-website.netlify.app",
+      "http://localhost:5173",
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
   })
 );
 
+
 app.use(express.json({ limit: "20kb" }));
+
 
 // ================= RATE LIMITING =================
 
